@@ -1,17 +1,22 @@
 {
-  "name": "kp-auto-codereview",
+  "name": "kp_auto_codereview",
   "version": "1.0.0",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/oonne/kp-auto-codereview.git"
-  },
   "author": "JAY",
   "license": "ISC",
   "dependencies": {
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1",
     "puppeteer-core": "^14.4.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "eslint": "^8.18.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
   }
 }
