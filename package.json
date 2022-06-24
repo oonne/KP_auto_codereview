@@ -2,17 +2,21 @@
   "name": "kp_auto_codereview",
   "version": "1.0.0",
   "description": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "JAY",
   "license": "ISC",
+  "scripts": {
+    "start": "cross-env NODE_OPTIONS='--no-warnings --loader=ts-node/esm' node src/main.ts"
+  },
   "dependencies": {
+    "cross-env": "^7.0.3",
     "eslint-config-prettier": "^8.5.0",
     "prettier": "^2.7.1",
-    "puppeteer-core": "^14.4.1"
+    "puppeteer": "^15.0.0",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
   },
   "devDependencies": {
+    "@types/puppeteer": "^5.4.6",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
     "@typescript-eslint/parser": "^5.29.0",
     "eslint": "^8.18.0",

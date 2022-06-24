@@ -1,1 +1,1 @@
-# kp-auto-codereview
+# KP auto code review

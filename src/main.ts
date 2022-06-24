@@ -1,5 +1,10 @@
-const a = 123;
+import puppeteer from 'puppeteer';
 
-console.log(a);
+(async () => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.goto('https://oonne.com');
+  await page.screenshot({ path: 'oonne.png' });
 
-export {};
+  await browser.close();
+})();
