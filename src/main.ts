@@ -1,10 +1,18 @@
-import puppeteer from 'puppeteer';
+import { Page } from 'puppeteer';
+import openPage from './robot/open-page';
+import waitRedirect from './robot/wait-redirect';
+import login from './robot/login';
 
-(async () => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto('https://oonne.com');
-  await page.screenshot({ path: 'oonne.png' });
+const AutoReview = async () => {
+  // 打开页面
+  const page: Page = await openPage();
 
-  await browser.close();
-})();
+  // 等待进入页面
+  await waitRedirect(page, '/q/status:open');
+
+  // 登录
+  await login(page);
+};
+
+// 运行机器人
+AutoReview();
