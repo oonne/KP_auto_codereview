@@ -1,4 +1,5 @@
 import puppeteer from 'puppeteer';
+import config from '../../config/config';
 
 const Robot = async () => {
   // 创建浏览器
@@ -10,7 +11,7 @@ const Robot = async () => {
   // 打开gerrit
   const pages = await browser.pages();
   const page = pages[0];
-  await page.goto('http://kp-gerrit.kptom.com');
+  await page.goto(config.url);
 
   return page;
 };
