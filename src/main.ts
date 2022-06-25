@@ -12,6 +12,9 @@ const AutoReview = async () => {
 
   // 登录
   await login(page);
+
+  // 定时刷新界面，检查最新提交
+  // TODO
 };
 
 // 运行机器人
