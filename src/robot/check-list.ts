@@ -4,9 +4,12 @@ import { Utils } from '../utils/index';
 import type { Commit } from '../../typings/type';
 import login from './login';
 import AutoReview from './auto-review';
+import waitRedirect from './wait-redirect';
 
 const Check = async (page: Page): Promise<void> => {
   await login(page);
+  await page.goto(`${config.url}/#/q/status:open`);
+  await waitRedirect(page, '/q/status:open');
   console.log('检查代码...');
 
   // 异步循环监听中的提交列表
