@@ -1,5 +1,6 @@
 import { Page } from 'puppeteer';
 import { Utils } from '../utils/index';
+import notice from '../webhook/notice';
 import waitRedirect from './wait-redirect';
 import type { Commit } from '../../typings/type';
 
@@ -31,6 +32,13 @@ const Check = async (page: Page, commit: Commit): Promise<void> => {
     await page.evaluate((el) => el.click(), submitBtn);
     await Utils.wait(1000);
   }
+
+  // 发通知
+  notice(`代码已合并
+  > 项目: ${commit.project}
+  > 提交信息: <font color="info">${commit.subject}</font>
+  > 提交分支:<font color="warning">${commit.branch}</font>
+  > 提交人:<font color="comment">${commit.owner}</font>`);
 
   await page.goBack();
 };
