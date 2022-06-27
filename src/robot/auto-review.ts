@@ -1,4 +1,5 @@
 import { Page } from 'puppeteer';
+import { Utils } from '../utils/index';
 import waitRedirect from './wait-redirect';
 import type { Commit } from '../../typings/type';
 
@@ -18,7 +19,20 @@ const Check = async (page: Page, commit: Commit): Promise<void> => {
   await waitRedirect(page, id);
 
   // 点击code review按钮
-  // TODO
+  const reviewBtn = await page.$('.com-google-gerrit-client-change-ChangeScreen_BinderImpl_GenCss_style-infoLineHeaderButtons .com-google-gerrit-client-change-ChangeScreen_BinderImpl_GenCss_style-highlight');
+  if (reviewBtn) {
+    await page.evaluate((el) => el.click(), reviewBtn);
+    await Utils.wait(1000);
+  }
+
+  // 点击 summit按钮
+  const submitBtn = await page.$('.com-google-gerrit-client-change-Actions_BinderImpl_GenCss_style-submit');
+  if (submitBtn) {
+    await page.evaluate((el) => el.click(), submitBtn);
+    await Utils.wait(1000);
+  }
+
+  await page.goBack();
 };
 
 export default Check;

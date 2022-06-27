@@ -47,7 +47,6 @@ const Check = async (page: Page): Promise<void> => {
   if (!commitList.length) {
     return;
   }
-  console.log(commitList);
 
   // 有需要合并的提交，依次点击
   for (let i = 0; i < commitList.length; i++) {
