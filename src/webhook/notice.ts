@@ -1,10 +1,15 @@
 import https from 'https';
 import config from '../../config/config';
 
-const notice = (content: string) => {
-  const postData = JSON.stringify({
+const notice = (content: string, type = 'text') => {
+  const postData = type === 'markdown' ? JSON.stringify({
     msgtype: 'markdown',
     markdown: {
+      content,
+    },
+  }) : JSON.stringify({
+    msgtype: 'text',
+    text: {
       content,
     },
   });
