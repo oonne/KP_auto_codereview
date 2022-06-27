@@ -5,7 +5,7 @@
   "author": "JAY",
   "license": "ISC",
   "scripts": {
-    "start": "cross-env NODE_OPTIONS='--no-warnings --loader=ts-node/esm' node src/main.ts"
+    "start": "node --no-warnings --loader=ts-node/esm src/main.ts"
   },
   "dependencies": {
     "cross-env": "^7.0.3",
