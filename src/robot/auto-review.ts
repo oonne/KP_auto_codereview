@@ -1,6 +1,7 @@
 import { Page } from 'puppeteer';
 import { Utils } from '../utils/index';
 import notice from '../webhook/notice';
+import error from '../webhook/error';
 import imageNotice from '../webhook/image';
 import waitRedirect from './wait-redirect';
 import type { Commit } from '../../typings/type';
@@ -25,6 +26,8 @@ const Check = async (page: Page, commit: Commit): Promise<void> => {
   if (reviewBtn) {
     await page.evaluate((el) => el.click(), reviewBtn);
     await Utils.wait(1000);
+  } else {
+    error('无法review');
   }
 
   // 点击 summit按钮
@@ -32,10 +35,12 @@ const Check = async (page: Page, commit: Commit): Promise<void> => {
   if (submitBtn) {
     await page.evaluate((el) => el.click(), submitBtn);
     await Utils.wait(1000);
+  } else {
+    error('无法submit');
   }
 
   // 发通知
-  notice(`代码已合并
+  notice(`准备合并代码
   > 项目: ${commit.project}
   > 提交信息: <font color="info">${commit.subject}</font>
   > 提交分支: <font color="warning">${commit.branch}</font>
