@@ -21,6 +21,37 @@ const Check = async (page: Page, commit: Commit): Promise<void> => {
   await page.evaluate((el) => { id = el.innerText; el.click(); }, linkList[0]);
   await waitRedirect(page, id);
 
+  // 无法合并处理
+  const notMergeable = await page.$('.com-google-gerrit-client-change-ChangeScreen_BinderImpl_GenCss_style-notMergeable');
+  if (notMergeable) {
+    // 代码无法合并通知
+    notice(`<font color="warning">代码无法合并</font>
+      > 项目: ${commit.project}
+      > 提交信息: <font color="comment">${commit.subject}</font>
+      > 提交分支: <font color="comment">${commit.branch}</font>
+      > 提交人: <font color="comment">${commit.owner}</font>`, 'markdown');
+    // 代码无法合并链接链接
+    const url = await page.url();
+    notice(url);
+
+    // 把无法合并的代码abandon掉
+    const actionElement = await page.$('#change_actions');
+    const btnList = await actionElement?.$$('button');
+    if (!btnList) {
+      return;
+    }
+    const abandonBtn = await btnList[4].$('div');
+    await page.evaluate((el) => el.click(), abandonBtn);
+    await Utils.wait(1000);
+
+    const confirmBtnmList = await page.$('.com-google-gerrit-client-change-ActionMessageBox_BinderImpl_GenCss_style-popup .com-google-gerrit-client-change-Resources-Style-button');
+    await page.evaluate((el) => el.click(), confirmBtnmList);
+    notice(`${commit.subject} 代码已abandon!`, 'text', [commit.owner as string]);
+
+    await page.goBack();
+    return;
+  }
+
   // 点击code review按钮
   const reviewBtn = await page.$('.com-google-gerrit-client-change-ChangeScreen_BinderImpl_GenCss_style-infoLineHeaderButtons .com-google-gerrit-client-change-ChangeScreen_BinderImpl_GenCss_style-highlight');
   if (reviewBtn) {

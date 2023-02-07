@@ -42,7 +42,6 @@ const Check = async (page: Page): Promise<void> => {
     // 无法合并
     if (status === 'Merge Conflict') {
       notice(`${subject} 代码冲突!`, 'text', [owner as string]);
-      return;
     }
 
     commitList.unshift({
