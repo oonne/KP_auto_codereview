@@ -1,4 +1,8 @@
 /* 全局配置 */
+export interface MentionedUser {
+  username: string;
+  mobile: string;
+}
 export interface GlobalConfig {
   url: string;
   username: string;
@@ -7,4 +11,5 @@ export interface GlobalConfig {
   noticeHook: string;
   errorHook: string;
   refreshInterval: number;
+  userList: MentionedUser[];
 }

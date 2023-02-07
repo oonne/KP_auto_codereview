@@ -9,6 +9,7 @@ const config: GlobalConfig = {
   noticeHook: '',
   errorHook: '',
   refreshInterval: 300000,
+  userList: [],
 };
 
 export default config;

@@ -1,7 +1,27 @@
 import https from 'https';
 import config from '../../config/config';
 
-const notice = (content: string, type = 'text') => {
+// 名称转为手机号
+const getMobileList = (nameList: string[]): string[] => {
+  const mobileList: string[] = [];
+  nameList.forEach((name) => {
+    const user = config.userList.find((mentionedUser) => mentionedUser.username === name);
+    if (!user) {
+      return;
+    }
+    mobileList.push(user.mobile);
+  });
+  return mobileList;
+};
+
+/*
+ * 发送机器人提示
+ * content: 内容
+ * type: 只简单支持 markdown 和 text
+ * mentionedList: 需要@人的列表
+ */
+type Type = 'text' | 'markdown';
+const notice = (content: string, type: Type = 'text', mentionedList: string[] = []) => {
   const postData = type === 'markdown' ? JSON.stringify({
     msgtype: 'markdown',
     markdown: {
@@ -11,6 +31,7 @@ const notice = (content: string, type = 'text') => {
     msgtype: 'text',
     text: {
       content,
+      mentioned_mobile_list: getMobileList(mentionedList),
     },
   });
   const options = {

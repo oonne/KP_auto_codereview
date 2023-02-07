@@ -5,6 +5,7 @@ import type { Commit } from '../../typings/type';
 import login from './login';
 import AutoReview from './auto-review';
 import waitRedirect from './wait-redirect';
+import notice from '../webhook/notice';
 
 const Check = async (page: Page): Promise<void> => {
   await login(page);
@@ -30,9 +31,17 @@ const Check = async (page: Page): Promise<void> => {
     const project = await page.evaluate((el) => el.innerText, linkList[3]);
     // 分支
     const branch = await page.evaluate((el) => el.innerText, linkList[4]);
+    // 状态
+    const status = await page.$eval('.cSTATUS', (el) => el?.innerText);
 
     // 只筛选监听中的项目
     if (!config.projectList.includes(project)) {
+      return;
+    }
+
+    // 无法合并
+    if (status === 'Merge Conflict') {
+      notice(`${subject} 代码冲突!`, 'text', [owner as string]);
       return;
     }
 
