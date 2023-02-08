@@ -22,10 +22,11 @@ const Check = async (page: Page, commit: Commit): Promise<void> => {
   await waitRedirect(page, id);
 
   // 无法合并处理
-  const notMergeable = await page.$('.com-google-gerrit-client-change-ChangeScreen_BinderImpl_GenCss_style-notMergeable');
+  const notMergeable = await page.$eval('.com-google-gerrit-client-change-ChangeScreen_BinderImpl_GenCss_style-notMergeable', (el) => el?.innerText);
   if (notMergeable) {
     // 代码无法合并通知
     notice(`<font color="warning">代码无法合并</font>
+      <font color="info">${notMergeable}</font>
       > 项目: ${commit.project}
       > 提交信息: <font color="comment">${commit.subject}</font>
       > 提交分支: <font color="comment">${commit.branch}</font>
