@@ -4,6 +4,7 @@ import openPage from './robot/open-page';
 import waitRedirect from './robot/wait-redirect';
 import login from './robot/login';
 import checkList from './robot/check-list';
+import error from './webhook/error';
 
 const AutoReview = async () => {
   // 打开页面
@@ -17,6 +18,8 @@ const AutoReview = async () => {
 
   // 定时刷新界面，检查最新提交
   checkList(page);
+
+  error('自动合并机器人已启动');
 };
 
 // 错误边界
